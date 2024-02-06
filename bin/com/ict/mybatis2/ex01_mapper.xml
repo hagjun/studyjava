@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 기본 mapper -->
+<mapper namespace="Members">
+	<!-- 메서드 이름 -->				<!-- 결과타입 리스트도 VO -->
+	<select id="selectAll" resultType="com.ict.mybatis2.Ex01_VO">
+		select * from Members
+	</select>
+	<select id="selectOne" resultType="com.ict.mybatis2.Ex01_VO"
+		parameterType="String">
+		select * from Members where idx = #{idx}
+	</select>
+	<!-- insert 는 무조건 결과타입이 int 이므로 쓰지 않는다 -->
+	<!-- 대신 파라미터를 꼭 쓰자 -->
+	<insert id="insert" parameterType="com.ict.mybatis2.Ex01_VO">
+		insert into Members(idx, id, pw, username, age, regdate)
+		values(#{idx}, #{id}, #{pw}, #{username}, #{age}, sysdate)
+		<!-- sysdate 컴퓨터의 현재 날짜 시간 -->
+		<!-- select sysdate from dual -->
+	</insert>
+	<!-- delete 는 무조건 결과타입이 int 이므로 쓰지 않는다 -->
+	<!-- 대신 파라미터를 꼭 쓰자 -->
+	<!-- 파라미터가 String 일때 -->
+	<delete id="delete" parameterType="String">
+		delete from Members where idx
+		= #{idx}
+	</delete>
+	<!-- 파라미터가 VO 일때 -->
+	<delete id="delete2" parameterType="com.ict.mybatis2.Ex01_VO">
+		delete from Members where
+		idx = #{idx}
+	</delete>
+	<update id="update" parameterType="com.ict.mybatis2.Ex01_VO">
+		update Members set username =
+		#{username}, age = #{age} where idx = #{idx}
+	</update>
+	<select id="login" resultType="com.ict.mybatis2.Ex01_VO" 
+			parameterType="com.ict.mybatis2.Ex01_VO">
+			select * from Members where id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 기본 mapper -->
+<mapper namespace="customer">
+	<!-- 
+	 - select 문의 resultType에서 여러줄이 나와도 List<VO> 아니다. 그냥 VO 타입이다.
+	 - select, insert, update, delete 공통
+	<select id="외부에서 호출할 때 사용할 id"  resultType="결과타입(VO 또는 int)" [ParameterType = "외부에서 들어오는 정보"] >
+		실제 사용할 쿼리
+	</select>
+	 파라미터가 한개 일때는 VO 또는 String, int 등 사용가능
+	 파라미터가 두개 ~ 여러개인 경우 반드시 VO사용
+	<insert id="" parameterType="" ></insert>
+	<delete id="" parameterType=""></delete>
+	<update id="" parameterType=""></update>
+	-->
+	<select id="getSelectAll" resultType="com.ict.mybatis.Ex01_VO">
+		select * from customer 
+	</select>
+	<!-- 파라미터를 String -->
+	<select id="getSelectOne" resultType="com.ict.mybatis.Ex01_VO" parameterType="String">
+		select * from customer where custid = #{custid}
+	</select>
+	<!-- 
+		집계함수를 사용하면 결과는 무조건 int로 나온다.
+	 -->
+	<select id="getCount" resultType="int">
+		select count(*) from customer
+	</select>
+	
+	<!-- 물음표가 두개이상이면 VO에 담아서 보낸다. -->
+	<insert id="getInsert" parameterType="com.ict.mybatis.Ex01_VO">
+		insert into customer(custid, name, address, phone) 
+		values(#{custid}, #{name}, #{address}, #{phone})
+	</insert>
+	<!-- 파라미터를 Vo로 -->
+	<delete id="getDelete" parameterType="com.ict.mybatis.Ex01_VO">
+		delete from customer where custid = #{custid}
+	</delete>
+	<update id="getUpdate" parameterType="com.ict.mybatis.Ex01_VO">
+		update customer 
+		set 
+			name = #{name}, 
+			address = #{address}, 
+			phone = #{phone} 
+		where custid = #{custid}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
